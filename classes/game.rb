@@ -24,7 +24,9 @@ class Game
       dead_cells.push(cell) if cell.alive? && (neighbour_count < 2)
 
       # anything alive with two or three alive neighbours lives on to the next generation
-      alive_cells.push(cell) if cell.alive? && (neighbour_count == 2 || 3)
+      if cell.alive? && (neighbour_count == 2 || neighbour_count == 3)
+        alive_cells.push(cell)
+      end
 
       # anything alive with more than three alive neighbours dies
       dead_cells.push(cell) if cell.alive? && (neighbour_count > 3)
