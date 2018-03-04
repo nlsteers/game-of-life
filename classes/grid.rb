@@ -1,6 +1,6 @@
 class Grid
   # getter and setter generators
-  attr_accessor :cells, :no_rows, :no_columns, :grid, :cell_neighbours
+  attr_accessor :no_rows, :no_columns, :grid, :cell_neighbours
 
   # called on new, initializes instance vars
   # @param [int] rows
@@ -8,12 +8,10 @@ class Grid
   def initialize(rows = 5, columns = 5)
     @no_rows = rows
     @no_columns = columns
-    @cells = []
     @cell_neighbours = []
     @grid = Array.new(no_rows) do |row|
       Array.new(no_columns) do |col|
         cell = Cell.new(row, col)
-        cells.push(cell)
         cell
       end
     end

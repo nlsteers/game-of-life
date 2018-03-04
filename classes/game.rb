@@ -16,24 +16,26 @@ class Game
     alive_cells = []
     dead_cells = []
     game_over = false
+    
+    @grid.grid.each do |row|
+      row.each do |cell|
+        # check each cells neighbours for alive cells
+        neighbour_count = grid.check_surrounding_cells(cell).count
 
-    @grid.cells.each do |cell|
-      # check each cells neighbours for alive cells
-      neighbour_count = grid.check_surrounding_cells(cell).count
+        # anything alive with fewer than two live neighbours dies
+        dead_cells.push(cell) if cell.alive? && (neighbour_count < 2)
 
-      # anything alive with fewer than two live neighbours dies
-      dead_cells.push(cell) if cell.alive? && (neighbour_count < 2)
+        # anything alive with two or three alive neighbours lives on to the next generation
+        if cell.alive? && (neighbour_count == 2 || neighbour_count == 3)
+          alive_cells.push(cell)
+        end
 
-      # anything alive with two or three alive neighbours lives on to the next generation
-      if cell.alive? && (neighbour_count == 2 || neighbour_count == 3)
-        alive_cells.push(cell)
+        # anything alive with more than three alive neighbours dies
+        dead_cells.push(cell) if cell.alive? && (neighbour_count > 3)
+
+        # anything dead with exactly three live neighbours becomes a live cell
+        alive_cells.push(cell) if cell.dead? && (neighbour_count == 3)
       end
-
-      # anything alive with more than three alive neighbours dies
-      dead_cells.push(cell) if cell.alive? && (neighbour_count > 3)
-
-      # anything dead with exactly three live neighbours becomes a live cell
-      alive_cells.push(cell) if cell.dead? && (neighbour_count == 3)
     end
 
     # set all cells in this array to alive
