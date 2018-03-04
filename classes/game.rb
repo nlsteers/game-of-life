@@ -15,6 +15,7 @@ class Game
   def tick!
     alive_cells = []
     dead_cells = []
+    game_over = false
 
     @grid.cells.each do |cell|
       # check each cells neighbours for alive cells
@@ -39,5 +40,11 @@ class Game
     alive_cells.each(&:alive!)
     # set all cells in this array to dead
     dead_cells.each(&:dead!)
+
+    if alive_cells.empty?
+      puts 'GAME OVER'
+      puts 'Press enter to end the game'
+      game_over = true
+    end
   end
 end

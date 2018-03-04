@@ -10,9 +10,9 @@ class Grid
     @no_columns = columns
     @cells = []
     @cell_neighbours = []
-    @grid = Array.new(no_rows) do |i|
-      Array.new(no_columns) do |j|
-        cell = Cell.new(i, j)
+    @grid = Array.new(no_rows) do |row|
+      Array.new(no_columns) do |col|
+        cell = Cell.new(row, col)
         cells.push(cell)
         cell
       end
@@ -114,9 +114,9 @@ class Grid
     grid.each do |row|
       row.each do |cell|
         if cell.alive?
-          print 'X'
+          print '0'
         else
-          print ' '
+          print '.'
         end
       end
       print "\n"
